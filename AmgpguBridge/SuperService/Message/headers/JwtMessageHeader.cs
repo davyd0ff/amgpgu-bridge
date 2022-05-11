@@ -1,10 +1,14 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace AmgpguBridge.SuperService.Message;
 public class JwtMessageHeader : MessageHeader
 {
-  public readonly string Ogrn;
-  public readonly string Kpp;
+  [JsonConverter(typeof(StringEnumConverter))]
   public readonly SuperServiceAction Action;
   public readonly string IdJwt;
+  public readonly string Ogrn;
+  public readonly string Kpp;
 
   public JwtMessageHeader(SuperServiceAction action,
     string idJwt,
