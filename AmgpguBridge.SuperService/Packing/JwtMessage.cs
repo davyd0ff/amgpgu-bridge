@@ -5,49 +5,58 @@ namespace AmgpguBridge.SuperService.Packing;
 
 public class JwtMessage
 {
-  public readonly string Header;
-  public readonly string Payload;
+  public string Header { get; private set; }
+  public string Payload { get; private set; }
 
-  private readonly string _encodedHeader;
-  private readonly string _encodedPayload;
-  private readonly string _encodedSignature;
+  private string _encodedHeader;
+  private string _encodedPayload;
+  private string _encodedSignature;
 
-  // DI ??
   private ISigner _signer;
   private IEncoder _encoder;
 
-  // todo development: Делай Bilder 
-
-  public JwtMessage(string header, string payload)
+  public JwtMessage(ISigner signer, IEncoder encoder)
   {
-    this.Header = header;
-    this.Payload = payload;
-
-    this._encodedHeader = Encode(this.Header);
-    this._encodedPayload = Encode(this.Payload);
-    this._encodedSignature = Sign(MakeSignature());
+    this._signer = signer;
+    this._encoder = encoder;
   }
 
-  public JwtMessage(string jwtMessage)
+  public void SetHeader(string header)
   {
-    var parts = jwtMessage.Split('.');
+    this.Header = header;
+    this._encodedHeader = this.Encode(header);
+  }
+  public void SetPayload(string payload)
+  {
+    this.Payload = payload;
+    this._encodedPayload = this.Encode(payload);
+  }
+    public void CreateByEncodedJwtMessage(string encodedJwtMessage)
+  {
+    var parts = encodedJwtMessage.Split('.');
 
     this._encodedHeader = parts[0];
     this._encodedPayload = parts[1];
-    this._encodedSignature = parts[2];
 
-    this.Header = Decode(_encodedHeader);
-    this.Payload = Decode(_encodedPayload);
+    this.Header = this.Decode(parts[0]);
+    this.Payload = this.Decode(parts[1]);
   }
+
+  public void Sign()
+  {
+    this._encodedSignature = this._signer.Sign(this.MakeSignature());
+  }
+
 
   public override string ToString()
   {
     return _encodedHeader + "." + _encodedPayload + "." + _encodedSignature;
   }
 
+
   private string MakeSignature()
   {
-    return _encodedHeader + "." + _encodedPayload;
+    return this._encodedHeader + "." + this._encodedPayload;
   }
   private string Decode(string data)
   {
@@ -56,10 +65,5 @@ public class JwtMessage
   private string Encode(string data)
   {
     return _encoder.Encode(data);
-  }
-
-  private string Sign(string data)
-  {
-    return _signer.Sign(data);
   }
 }
