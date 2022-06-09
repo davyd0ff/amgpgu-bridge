@@ -6,11 +6,13 @@ public class Packer<TSEntity> where TSEntity : Entities.Entity
 {
   private readonly MessageHeader _header;
   private readonly TSEntity _entity;
+  private readonly JwtMessageBuilder _jwtMessageBuilder;
 
-  public Packer(MessageHeader header, TSEntity entity)
+  public Packer(MessageHeader header, TSEntity entity, JwtMessageBuilder jwtMessageBuilder)
   {
     this._header = header;
     this._entity = entity;
+    this._jwtMessageBuilder = jwtMessageBuilder;
   }
 
   private string MakeHeader()
@@ -18,14 +20,17 @@ public class Packer<TSEntity> where TSEntity : Entities.Entity
     return this._header.Serialize(new JsonSerializer());
   }
 
-  private string MakeBody()
+  private string MakePayload()
   {
     return (new PackageData<TSEntity>(this._entity)).Serialize(new XmlSerializer());
   }
 
-  protected JwtMessage MakeJwtMessage()
+  private JwtMessage MakeJwtMessage()
   {
-    return new JwtMessage(this.MakeHeader(), this.MakeBody());
+    return this._jwtMessageBuilder
+      .SetHeader(this.MakeHeader())
+      .SetPayload(this.MakePayload())
+      .GetResult();
   }
 
   public JwtToken Pack()
