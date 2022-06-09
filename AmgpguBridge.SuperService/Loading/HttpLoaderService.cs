@@ -8,24 +8,28 @@ public class HttpLoaderService : ILoader
   private readonly Uri _baseAddress;
   private readonly IHttpPostClient _postClient;
   private readonly ISerializer _serializer;
+  private readonly ResponseFactory _responseFactory;
 
-  public HttpLoaderService(Uri baseAddress, IHttpPostClient postClient, ISerializer serializer)
+  public HttpLoaderService(Uri baseAddress, IHttpPostClient postClient, ISerializer serializer, ResponseFactory responseFactory)
   {
     this._baseAddress = baseAddress;
     this._postClient = postClient;
     this._serializer = serializer;
+    this._responseFactory = responseFactory;
   }
 
   public IResponse Load(string action, JwtToken jwtToken)
   {
+    SuperserviceResponse superserviceResponse;
     try
     {
       var response = this._postClient.Post(new Uri(this._baseAddress, action), jwtToken.Serialize(this._serializer)).GetAwaiter().GetResult();
-      return this._serializer.Deserialize<ResponseFactory>(response).GetResponse();
+      superserviceResponse = this._serializer.Deserialize<SuperserviceResponse>(response);
     }
     catch (HttpRequestException exception)
     {
-      return new ResponseFactory(exception).GetResponse();
+      superserviceResponse = new SuperserviceResponse(exception);
     }
+    return this._responseFactory.GetConcreteResponse(superserviceResponse);
   }
 }

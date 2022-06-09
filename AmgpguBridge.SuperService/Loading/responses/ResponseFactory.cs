@@ -4,26 +4,19 @@ namespace AmgpguBridge.SuperService.Loading;
 
 public class ResponseFactory
 {
-  public string IdJwt { get; set; }
-  public string ResponseToken { get; set; }
-  public string Error { get; set; }
-  public string Result { get; set; }
-  public HttpRequestException Exception { get; set; }
-
-  public ResponseFactory() { } // for JsonConverter
-
-  public ResponseFactory(HttpRequestException exception)
+  private JwtMessageBuilder _jwtMessageBuilder;
+  public ResponseFactory(JwtMessageBuilder jwtMessageBuilder)
   {
-    this.Exception = exception;
+    this._jwtMessageBuilder = jwtMessageBuilder;
   }
 
-  public IResponse GetResponse()
+  public IResponse GetConcreteResponse(SuperserviceResponse response)
   {
-    if (IsNotEmpty(this.Error)) return new ErrorResponse(this.Error);
-    if (IsNotEmpty(this.ResponseToken)) return new InfoResponse(new JwtMessage(this.ResponseToken));
-    if (IsNotEmpty(this.Result)) return new SuccessResponse(this.IdJwt);
-    if (IsNotEmpty(this.IdJwt)) return new SuccessResponse(this.IdJwt);
-    if (IsNotEmpty(this.Exception)) return new ExceptionResponse(this.Exception);
+    if (IsNotEmpty(response.Error)) return new ErrorResponse(response.Error);
+    if (IsNotEmpty(response.ResponseToken)) return new InfoResponse(this._jwtMessageBuilder.SetEncodedJwtMessage(response.ResponseToken).GetResult());
+    if (IsNotEmpty(response.Result)) return new SuccessResponse(response.IdJwt);
+    if (IsNotEmpty(response.IdJwt)) return new SuccessResponse(response.IdJwt);
+    if (IsNotEmpty(response.Exception)) return new ExceptionResponse(response.Exception);
 
     // todo develop: Добавь внятное исключение
     throw new Exception("Нет реализации для текущего ответа");
