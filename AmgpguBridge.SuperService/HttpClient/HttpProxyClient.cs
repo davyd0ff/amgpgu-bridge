@@ -1,6 +1,6 @@
 ﻿using AmgpguBridge.SuperService.Serializing;
 
-namespace AmgpguBridge.SuperService;
+namespace AmgpguBridge.SuperService.HttpClient;
 
 public class HttpProxyClient : IHttpPostClient
 {

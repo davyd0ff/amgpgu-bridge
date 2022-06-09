@@ -1,4 +1,4 @@
-﻿namespace AmgpguBridge.SuperService;
+﻿namespace AmgpguBridge.SuperService.HttpClient;
 
 public interface IHttpPostClient
 {

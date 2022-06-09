@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 
-namespace AmgpguBridge.SuperService;
+namespace AmgpguBridge.SuperService.HttpClient;
 
 public class HttpPostClient : IHttpPostClient, IDisposable
 {
