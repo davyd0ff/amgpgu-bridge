@@ -1,4 +1,6 @@
-﻿namespace AmgpguBridge.SuperService.Signing;
+﻿using AmgpguBridge.SuperService.HttpClient;
+
+namespace AmgpguBridge.SuperService.Signing;
 
 public class SignerService : ISigner
 {
