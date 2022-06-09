@@ -6,11 +6,13 @@ public class PackerFactory
 {
   private readonly string _ogrn;
   private readonly string _kpp;
+  private readonly JwtMessageBuilder _jwtMessageBuilder;
 
-  public PackerFactory(string ogrn, string kpp)
+  public PackerFactory(string ogrn, string kpp, JwtMessageBuilder jwtMessageBuilder)
   {
     this._kpp = kpp;
     this._ogrn = ogrn;
+    this._jwtMessageBuilder = jwtMessageBuilder;
   }
 
   private EntityHeader MakeEntityHeader(SuperServiceAction action, Entity entity)
@@ -27,12 +29,12 @@ public class PackerFactory
     where TSEntity : SuperService.Entities.Entity
   {
     var header = this.MakeEntityHeader(action, superserviceEntity);
-    return new Packer<TSEntity>(header, superserviceEntity);
+    return new Packer<TSEntity>(header, superserviceEntity, this._jwtMessageBuilder);
   }
 
   public Packer<EmptyEntity> MakePacker(SuperServiceAction action, string idJwt)
   {
     var header = this.MakeJwtMessageHeader(action, idJwt);
-    return new Packer<EmptyEntity>(header, new EmptyEntity());
+    return new Packer<EmptyEntity>(header, new EmptyEntity(), this._jwtMessageBuilder);
   }
 }
