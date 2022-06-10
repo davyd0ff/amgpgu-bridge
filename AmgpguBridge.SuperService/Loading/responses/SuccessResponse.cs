@@ -1,16 +1,16 @@
 namespace AmgpguBridge.SuperService.Loading;
 public class SuccessResponse : IResponse
 {
-  private string _idJwt;
+  private int _idJwt;
 
-  public SuccessResponse(string idJwt)
+  public SuccessResponse(int idJwt)
   {
     this._idJwt = idJwt;
   }
 
   public string GetData()
   {
-    return this._idJwt;
+    return this._idJwt.ToString();
   }
 
   public ResponseType GetResponseType()

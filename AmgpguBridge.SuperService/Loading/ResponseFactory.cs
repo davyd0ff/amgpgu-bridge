@@ -22,6 +22,10 @@ public class ResponseFactory
     throw new Exception("Нет реализации для текущего ответа");
   }
 
+  private bool IsNotEmpty(int property)
+  {
+    return property != 0;
+  }
   private bool IsNotEmpty(string property)
   {
     return !string.IsNullOrEmpty(property);
