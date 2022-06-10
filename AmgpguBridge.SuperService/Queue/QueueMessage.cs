@@ -5,6 +5,7 @@ public class QueueMessage
   public string Body { get; }
   public string UidMessage { get; }
   public string UidEntity { get; }
+  public string IdJwt { get; set; }
   public DateTime Date { get; }
   public QueueName QueueName { get; }
   public QueueMessage ParentMessage { get; set; }
