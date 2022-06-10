@@ -2,7 +2,7 @@
 
 public class SuperserviceResponse
 {
-  public string IdJwt { get; set; }
+  public int IdJwt { get; set; }
   public string ResponseToken { get; set; }
   public string Error { get; set; }
   public string Result { get; set; }
