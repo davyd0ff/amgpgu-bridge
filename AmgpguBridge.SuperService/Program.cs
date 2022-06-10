@@ -1,5 +1,5 @@
-using AmgpguBridge.SuperService;
 using AmgpguBridge.SuperService.Encoding;
+using AmgpguBridge.SuperService.HttpClient;
 using AmgpguBridge.SuperService.Loading;
 using AmgpguBridge.SuperService.Packing;
 using AmgpguBridge.SuperService.Serializing;

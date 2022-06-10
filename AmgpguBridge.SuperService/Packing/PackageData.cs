@@ -1,4 +1,4 @@
-﻿using AmgpguBridge.SuperService.Entities;
+﻿using AmgpguBridge.SuperService.Entities.SuperService;
 using AmgpguBridge.SuperService.Serializing;
 
 namespace AmgpguBridge.SuperService.Packing;
