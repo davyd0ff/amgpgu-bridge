@@ -1,3 +1,5 @@
+using AmgpguBridge.SuperService.Entities.SuperService;
+
 namespace AmgpguBridge.SuperService.Entities;
 
 // ПланНабора для специальности

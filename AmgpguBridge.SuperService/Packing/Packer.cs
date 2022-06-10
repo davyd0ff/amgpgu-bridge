@@ -1,8 +1,9 @@
-﻿using AmgpguBridge.SuperService.Serializing;
+﻿using AmgpguBridge.SuperService.Entities.SuperService;
+using AmgpguBridge.SuperService.Serializing;
 
 namespace AmgpguBridge.SuperService.Packing;
 
-public class Packer<TSEntity> where TSEntity : Entities.Entity
+public class Packer<TSEntity> where TSEntity : Entity
 {
   private readonly MessageHeader _header;
   private readonly TSEntity _entity;
