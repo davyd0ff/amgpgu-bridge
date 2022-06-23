@@ -1,4 +1,4 @@
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 // Вступительные испытания
 public class EntranceTest {

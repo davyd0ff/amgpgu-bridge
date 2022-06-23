@@ -1,4 +1,4 @@
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 // Время и место проведения экзамена
 public class EntranceTestLocation {

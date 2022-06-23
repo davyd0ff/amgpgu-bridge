@@ -1,4 +1,4 @@
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 public class CompetitiveGroupApplicationsListPackage {
   public string Uid { get; set; }

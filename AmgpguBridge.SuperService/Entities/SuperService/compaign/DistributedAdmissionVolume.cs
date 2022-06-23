@@ -1,6 +1,4 @@
-using AmgpguBridge.SuperService.Entities.SuperService;
-
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 public class DistributedAdmissionVolume : Entity {
   public string Uid { get; set; }

@@ -1,6 +1,6 @@
 using AmgpguBridge.SuperService.Entities.SuperService;
 
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 // хз я так понимаю это ИД
 public class CmpAchievement : Entity {

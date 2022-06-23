@@ -1,6 +1,4 @@
-using AmgpguBridge.SuperService.Entities.SuperService;
-
-namespace AmgpguBridge.SuperService.Entities;
+namespace AmgpguBridge.SuperService.Entities.SuperService;
 
 // Сроки приема
 public class TermsAdmission : Entity {
