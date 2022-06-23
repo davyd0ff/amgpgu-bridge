@@ -1,4 +1,4 @@
-﻿using AmgpguBridge.SuperService.Entities;
+﻿using AmgpguBridge.SuperService.Entities.SuperService;
 
 namespace AmgpguBridge.SuperService.Packing;
 
@@ -26,7 +26,7 @@ public class PackerFactory
   }
 
   public Packer<TSEntity> MakePacker<TSEntity>(SuperServiceAction action, TSEntity superserviceEntity)
-    where TSEntity : SuperService.Entities.Entity
+    where TSEntity : Entity
   {
     var header = this.MakeEntityHeader(action, superserviceEntity);
     return new Packer<TSEntity>(header, superserviceEntity, this._jwtMessageBuilder);
