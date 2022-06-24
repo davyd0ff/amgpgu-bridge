@@ -23,8 +23,9 @@ builder.Services
    ))
 
   .AddSingleton<JwtMessageBuilder>()
-  
+  .AddSingleton<JsonSerializer>()
   .AddSingleton<ResponseFactory>()
+
 
   .AddSingleton<ILoader>(services => new HttpLoaderService(
     new Uri(config["SuperService:Address"]),
@@ -32,7 +33,7 @@ builder.Services
       new Uri(config["SuperService:Proxy:Address"]),
       services.GetRequiredService<IHttpPostClient>()
     ),
-    new JsonSerializer(),
+    services.GetRequiredService<JsonSerializer>(),
     services.GetRequiredService<ResponseFactory>()
    ));
 
