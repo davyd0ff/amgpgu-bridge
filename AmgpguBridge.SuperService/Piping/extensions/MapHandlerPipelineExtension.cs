@@ -5,7 +5,7 @@ namespace AmgpguBridge.SuperService.Piping;
 
 public static class MapHandlerPipelineExtension
 {
-  public static Pipeline<TSEntity> Map<TUEntity, TSEntity>(this Pipeline<TSEntity> pipeline)
+  public static Pipeline Map<TUEntity, TSEntity>(this Pipeline pipeline)
     where TUEntity : Entities.University.Entity
     where TSEntity : Entities.SuperService.Entity
   {

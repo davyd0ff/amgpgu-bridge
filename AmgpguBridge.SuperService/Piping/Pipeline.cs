@@ -1,17 +1,17 @@
 ﻿namespace AmgpguBridge.SuperService.Piping;
 
-public class Pipeline<TSEntity> where TSEntity : Entities.SuperService.Entity
+public class Pipeline
 {
   private PipeHandler _handler = null;
 
   public readonly IServiceProvider ServiceProvider;
-  public readonly Context<TSEntity> Context;
+  //public readonly Context<TSEntity> Context;
 
 
 
-  public Pipeline(Context<TSEntity> context, IServiceProvider serviceProvider)
+  public Pipeline(IServiceProvider serviceProvider)
   {
-    this.Context = context;
+    //this.Context = context;
     this.ServiceProvider = serviceProvider;
   }
 
@@ -21,8 +21,9 @@ public class Pipeline<TSEntity> where TSEntity : Entities.SuperService.Entity
     this._handler.SetNextHandler(handler);
   }
 
-  public void Handle()
+  public void Handle<TSEntity>(Context<TSEntity> context)
+    where TSEntity : Entities.SuperService.Entity
   {
-    this._handler.Handle(this.Context);
+    this._handler.Handle(context);
   }
 }

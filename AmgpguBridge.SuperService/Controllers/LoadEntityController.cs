@@ -29,43 +29,29 @@ public class LoadEntityController
     where TUEntity : Entities.University.Entity
     where TSEntity : Entity
   {
-    new Pipeline<TSEntity>(new Context<TSEntity>(queueMessage, SuperServiceAction.Edit), ServiceProvider)
+    var pipeline = new Pipeline(ServiceProvider)
       .Error()
       .Map<TUEntity, TSEntity>()
       .ItIsInDatabase()
       .Pack()
       .Load("api/token/new")
       .Move();
+
+    pipeline.Handle(new Context<TSEntity>(queueMessage, SuperServiceAction.Edit));
   }
 
   public async Task DeleteEntity<TUEntity, TSEntity>(QueueMessage queueMessage)
     where TUEntity : Entities.University.Entity
     where TSEntity : Entity
   {
-    new Pipeline<TSEntity>(new Context<TSEntity>(queueMessage, SuperServiceAction.Delete), ServiceProvider)
+    var pipeline = new Pipeline(this.ServiceProvider)
       .Error()
       .Map()
       .ItIsInDatabase()
       .Pack()
       .Load("api/token/new")
       .Move();
-  }
 
-  public async Task Confirm(QueueMessage queueMessage)
-  {
-    .ItIsInDatabase()
-    .Pack()
-    .Load("api/token/service/confirm")
-    .Move()
-    .Catch();
-  }
-
-  public async Task GetInfo(QueueMessage queueMessage)
-  {
-    .ItIsInDatabase()
-    .Pack()
-    .Load("api/token/service/info")
-    .Move()
-    .Catch();
+    pipeline.Handle(new Context<TSEntity>(queueMessage, SuperServiceAction.Delete));
   }
 }

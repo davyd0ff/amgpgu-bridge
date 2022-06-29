@@ -14,21 +14,25 @@ public class ServiceController
 
   public async Task GetInfo(QueueMessage queueMessage)
   {
-    new Pipeline<EmptyEntity>(new Context<EmptyEntity>(queueMessage, SuperServiceAction.GetMessage), ServiceProvider)
+    var pipeline = new Pipeline(ServiceProvider)
       .Error()
       .ItIsInDatabase()
       .Pack()
       .Load("api/token/service/info")
       .Move();
+
+    pipeline.Handle(new Context<EmptyEntity>(queueMessage, SuperServiceAction.GetMessage));
   }
 
   public async Task Confirm(QueueMessage queueMessage)
   {
-    new Pipeline<EmptyEntity>(new Context<EmptyEntity>(queueMessage, SuperServiceAction.Confirm), ServiceProvider)
+    var pipeline = new Pipeline(ServiceProvider)
       .Error()
       .ItIsInDatabase()
       .Pack()
       .Load("api/token/service/confirm")
       .Move();
+
+    pipeline.Handle(new Context<EmptyEntity>(queueMessage, SuperServiceAction.Confirm));
   }
 }
