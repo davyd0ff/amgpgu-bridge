@@ -15,7 +15,7 @@ public class MoveHandler : PipeHandler
   {
     var stage = this.DetermineStage(context.Action);
     var strategy = this._strategyFactory.MakeStrategy(stage, context.Response);
-    
+
     strategy.MoveQueueMessage(context.QueueMessage);
 
     base.Handle(context);
