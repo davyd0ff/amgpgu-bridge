@@ -4,8 +4,7 @@ namespace AmgpguBridge.SuperService.Piping;
 
 public static class LoadHandlerPipelineExtension
 {
-  public static Pipeline Load<TSEntity>(this Pipeline pipeline, string action)
-    where TSEntity : Entities.SuperService.Entity
+  public static Pipeline Load(this Pipeline pipeline, string action)
   {
 
     pipeline.AddHandler(

@@ -1,12 +1,10 @@
-﻿using AmgpguBridge.SuperService.Queue;
-using AmgpguBridge.SuperService.Queue.QeueMoveStrategies;
+﻿using AmgpguBridge.SuperService.Queue.QeueMoveStrategies;
 
 namespace AmgpguBridge.SuperService.Piping;
 
 public static class MoveHandlerPipelineExtension
 {
-  public static Pipeline Move<TSEntity>(this Pipeline pipeline)
-    where TSEntity : Entities.SuperService.Entity
+  public static Pipeline Move(this Pipeline pipeline)
   {
     pipeline.AddHandler(
       new MoveHandler(

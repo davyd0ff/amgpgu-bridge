@@ -4,8 +4,7 @@ namespace AmgpguBridge.SuperService.Piping;
 
 public static class PackHandlerPipelineExtension
 {
-  public static Pipeline Pack<TSEntity>(this Pipeline pipeline)
-    where TSEntity : Entities.SuperService.Entity
+  public static Pipeline Pack(this Pipeline pipeline)
   {
     pipeline.AddHandler(
       new PackHandler(pipeline.ServiceProvider.GetRequiredService<PackerFactory>())
