@@ -4,10 +4,10 @@ namespace AmgpguBridge.SuperService.Piping;
 
 public class ErrorHandler : PipeHandler
 {
-  private IQueueMoveStrategy _queueMoveStrategy;
-  public ErrorHandler(IQueueMoveStrategy queueMoveStrategy)
+  private QueueMoveStrategyFactory _queueMoveStrategyFactory;
+  public ErrorHandler(QueueMoveStrategyFactory queueMoveStrategyFactory)
   {
-    this._queueMoveStrategy = queueMoveStrategy;
+    this._queueMoveStrategyFactory = queueMoveStrategyFactory;
   }
 
   public override void Handle<TSEntity>(Context<TSEntity> context)
@@ -15,11 +15,11 @@ public class ErrorHandler : PipeHandler
     try
     {
       base.Handle(context);
-    } catch (Exception exception)
+    }
+    catch (Exception exception)
     {
-      context.QueueMessage.Error = exception.ToString();
-      context.QueueMessage.Status = SuperService.Queue.QueueMessageStatus.Error;
-      this._queueMoveStrategy.MoveQueueMessage(context.QueueMessage);
+      var queueMoveStrategy = this._queueMoveStrategyFactory.MakeExceptionStrategy(exception);
+      queueMoveStrategy.MoveQueueMessage(context.QueueMessage);
     }
   }
 }
