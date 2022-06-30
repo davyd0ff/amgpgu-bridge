@@ -11,6 +11,11 @@ public class QueueMoveStrategyFactory
     this._queueWriter = queueWriter;
   }
 
+  public IQueueMoveStrategy MakeExceptionStrategy(Exception exception)
+  {
+    return new ExceptionStrategy(this._queueWriter, exception);
+  }
+
   public IQueueMoveStrategy MakeStrategy(SuperServiceStage stage, IResponse response)
   {
     return (stage, response.GetResponseType()) switch
