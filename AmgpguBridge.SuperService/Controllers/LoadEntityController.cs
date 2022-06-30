@@ -16,13 +16,15 @@ public class LoadEntityController
     where TUEntity : Entities.University.Entity
     where TSEntity : Entity
   {
-    new Pipeline<TSEntity>(new Context<TSEntity>(queueMessage, SuperServiceAction.Add), ServiceProvider)
+    var pipeline = new Pipeline(ServiceProvider)
       .Error()
       .Map()
       .ItIsNotInDatabase()
       .Pack()
       .Load("api/token/new")
       .Move();
+
+    pipeline.Handle(new Context<TSEntity>(queueMessage, SuperServiceAction.Add));
   }
 
   public async Task ChangeEntity<TUEntity, TSEntity>(QueueMessage queueMessage)
