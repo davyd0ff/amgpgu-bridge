@@ -4,5 +4,5 @@ namespace AmgpguBridge.SuperService.Queue.QeueMoveStrategies;
 
 public interface IQueueMoveStrategy
 {
-  void MoveQueueMessage(QueueMessage queueMessage, IQueueWriter queueWriter);
+  void MoveQueueMessage(QueueMessage queueMessage);
 }

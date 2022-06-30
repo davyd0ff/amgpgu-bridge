@@ -4,10 +4,17 @@ namespace AmgpguBridge.SuperService.Queue.QeueMoveStrategies;
 
 public class SuccessConfirmStrategy : IQueueMoveStrategy
 {
-  public void MoveQueueMessage(QueueMessage queueMessage, IQueueWriter queueWriter)
+  private IQueueWriter _queueWriter;
+
+  public SuccessConfirmStrategy(IQueueWriter queueWriter)
+  {
+    this._queueWriter = queueWriter;
+  }
+
+  public void MoveQueueMessage(QueueMessage queueMessage)
   {
     queueMessage.Status = QueueMessageStatus.Done;
 
-    queueWriter.Write(QueueName.Database, queueMessage);
+    this._queueWriter.Write(QueueName.Database, queueMessage);
   }
 }
