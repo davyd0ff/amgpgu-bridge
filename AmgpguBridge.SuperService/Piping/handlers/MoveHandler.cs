@@ -6,12 +6,9 @@ namespace AmgpguBridge.SuperService.Piping;
 public class MoveHandler : PipeHandler
 {
   private QueueMoveStrategyFactory _strategyFactory;
-  private IQueueWriter _queueWriter;
-
-  public MoveHandler(QueueMoveStrategyFactory strategyFactory, IQueueWriter queueWriter)
+  public MoveHandler(QueueMoveStrategyFactory strategyFactory)
   {
     this._strategyFactory = strategyFactory;
-    this._queueWriter = queueWriter;
   }
 
   public override void Handle<TSEntity>(Context<TSEntity> context)
@@ -19,7 +16,7 @@ public class MoveHandler : PipeHandler
     var stage = this.DetermineStage(context.Action);
     var strategy = this._strategyFactory.MakeStrategy(stage, context.Response);
     
-    strategy.MoveQueueMessage(context.QueueMessage, this._queueWriter);
+    strategy.MoveQueueMessage(context.QueueMessage);
 
     base.Handle(context);
   }

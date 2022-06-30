@@ -10,8 +10,7 @@ public static class MoveHandlerPipelineExtension
   {
     pipeline.AddHandler(
       new MoveHandler(
-        pipeline.ServiceProvider.GetRequiredService<QueueMoveStrategyFactory>(),
-        pipeline.ServiceProvider.GetRequiredService<IQueueWriter>()
+        pipeline.ServiceProvider.GetRequiredService<QueueMoveStrategyFactory>()
       )
     );
 
